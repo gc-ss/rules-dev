@@ -11,3 +11,13 @@ opa-debug-js
 *.api-txt
 *.exe
 *.log
+*.pyc
+
+.terraform
+.DS_Store
+venv
+.vscode
+.scratch
+regula
+
+metadata.csv
