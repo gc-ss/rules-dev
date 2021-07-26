@@ -1,0 +1,158 @@
+rules:
+  aws/amazon_mq/encryption_enabled.rego:
+    description: AmazonMQ Broker should have encryption enabled
+    resource_type_description:
+      plural: brokers
+      singular: broker
+    resource_types:
+      cfn: AWS::AmazonMQ::Broker
+    rule_id: NEW_3917
+    service: amazon_mq
+    severity: Low
+  aws/amazon_mq/engine_version_5_15_10.rego:
+    description: AmazonMQ Broker engine version should be at least 5.15.10
+    resource_type_description:
+      plural: brokers
+      singular: broker
+    resource_types:
+      cfn: AWS::AmazonMQ::Broker
+    rule_id: NEW_ccf7
+    service: amazon_mq
+    severity: Low
+  aws/amazon_mq/logging_enabled.rego:
+    description: AmazonMQ Broker should have logging enabled
+    resource_type_description:
+      plural: brokers
+      singular: broker
+    resource_types:
+      tf: aws_mq_broker
+    rule_id: NEW_65f7
+    service: amazon_mq
+    severity: Low
+  aws/amazon_mq/publicly_exposed.rego:
+    description: AmazonMQ Broker should not be publicly exposed
+    resource_type_description:
+      plural: brokers
+      singular: broker
+    resource_types:
+      cfn: AWS::AmazonMQ::Broker
+      tf: aws_mq_broker
+    rule_id: NEW_2267
+    service: amazon_mq
+    severity: Low
+  aws/amazon_mq/version_upgrades_enabled.rego:
+    description: AmazonMQ Broker should have version upgrades enabled
+    resource_type_description:
+      plural: brokers
+      singular: broker
+    resource_types:
+      cfn: AWS::AmazonMQ::Broker
+    rule_id: NEW_bd76
+    service: amazon_mq
+    severity: Low
+  aws/api_gateway/access_log_setting.rego:
+    description: API Gateway Deployment should have an access log setting
+    resource_type_description:
+      plural: deployments
+      singular: deployment
+    resource_types:
+      cfn: AWS::ApiGateway::Deployment
+    rule_id: NEW_661e
+    service: api_gateway
+    severity: Low
+  aws/api_gateway/access_logging_enabled.rego:
+    description: API Gateway Stage should have access logging enabled
+    resource_type_description:
+      plural: stages
+      singular: stage
+    resource_types:
+      cfn: AWS::ApiGateway::Stage
+      tf: aws_api_gateway_stage
+    rule_id: NEW_aa7d
+    service: api_gateway
+    severity: Low
+  aws/api_gateway/cloud_watch_metrics_enabled.rego:
+    description: CloudWatch Metrics should be enabled
+    resource_type_description:
+      plural: methodsettingss
+      singular: methodsettings
+    resource_types:
+      tf: aws_api_gateway_method_settings
+    rule_id: NEW_73db
+    service: api_gateway
+    severity: Low
+  aws/api_gateway/open_access.rego:
+    description: API Gateway Method should not have open access
+    resource_type_description:
+      plural: methods
+      singular: method
+    resource_types:
+      cfn: AWS::ApiGateway::Method
+      tf: aws_api_gateway_method
+    rule_id: NEW_4a01
+    service: api_gateway
+    severity: Low
+  aws/api_gateway/xray_enabled.rego:
+    description: API Gateway Stage should have xray enabled
+    resource_type_description:
+      plural: stages
+      singular: stage
+    resource_types:
+      cfn: AWS::ApiGateway::Stage
+      tf: aws_api_gateway_stage
+    rule_id: NEW_374e
+    service: api_gateway
+    severity: Low
+  aws/docdb/clusters_backup_retention_period.rego:
+    description: DocDB Clusters should have a backup retention period set
+    resource_type_description:
+      plural: clusters
+      singular: cluster
+    resource_types:
+      cfn: AWS::DocDB::DBCluster
+    rule_id: NEW_ca25
+    service: docdb
+    severity: Low
+  aws/docdb/clusters_encryption_rest.rego:
+    description: DocDB Clusters should use encryption at rest
+    resource_type_description:
+      plural: clusters
+      singular: cluster
+    resource_types:
+      cfn: AWS::DocDB::DBCluster
+      tf: aws_docdb_cluster
+    rule_id: NEW_0f21
+    service: docdb
+    severity: Low
+  aws/docdb/clusters_logging_enabled.rego:
+    description: DocDB Clusters should have logging enabled
+    resource_type_description:
+      plural: clusters
+      singular: cluster
+    resource_types:
+      cfn: AWS::DocDB::DBCluster
+      tf: aws_docdb_cluster
+    rule_id: NEW_17ef
+    service: docdb
+    severity: Low
+  aws/docdb/clusters_master_password_plaintext.rego:
+    description: DocDB Clusters should not define a master password in plaintext
+    resource_type_description:
+      plural: clusters
+      singular: cluster
+    resource_types:
+      cfn: AWS::DocDB::DBCluster
+    rule_id: NEW_a8ea
+    service: docdb
+    severity: Low
+  aws/docdb/groups_tls_enabled.rego:
+    description: DocDB Cluster Parameter Groups should have TLS enabled
+    resource_type_description:
+      plural: clusterparametergroups
+      singular: clusterparametergroup
+    resource_types:
+      cfn: AWS::DocDB::DBClusterParameterGroup
+      tf: aws_docdb_cluster_parameter_group
+    rule_id: NEW_c9d3
+    service: docdb
+    severity: Low
