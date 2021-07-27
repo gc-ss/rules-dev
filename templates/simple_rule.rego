@@ -18,8 +18,6 @@ package rules.{{ input_type }}_{{ service }}_{{ name }}
 package rules.{{ input_type }}_{{ provider }}_{{ service }}_{{ name }}
 {% endif %}
 
-import data.fugue
-
 __rego__metadoc__ := {
 	"id": "{{ id }}",
 	"title": "{{ title }}",
@@ -34,22 +32,10 @@ __rego__metadoc__ := {
 input_type = "{{ input_type }}"
 {% endif %}
 
-resource_type = "MULTIPLE"
+resource_type = "{{ resource_type }}"
 
-resources = fugue.resources("{{ resource_type }}")
+default allow = false
 
-is_invalid(resource) {
-    false # TODO
-}
-
-policy[p] {
-	resource = resources[_]
-	reason = is_invalid(resource)
-	p = fugue.deny_resource(resource)
-}
-
-policy[p] {
-	resource = resources[_]
-	not is_invalid(resource)
-	p = fugue.allow_resource(resource)
+allow {
+    input.TODO == true
 }
