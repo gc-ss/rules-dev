@@ -28,8 +28,8 @@ input_type = "cfn"
 
 resource_type = "AWS::AmazonMQ::Broker"
 
-default allow = false
+default deny = false
 
-allow {
-	input.TODO == true
+deny {
+	input.TODO == false
 }

@@ -12,22 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.tf_aws_api_gateway_method_metrics
-
-__rego__metadoc__ := {
-	"id": "NEW_73db",
-	"title": "CloudWatch Metrics should be enabled",
-	"description": "CloudWatch Metrics should be enabled",
-	"custom": {
-		"controls": {},
-		"severity": "Medium",
-	},
-}
-
-resource_type = "aws_api_gateway_method_settings"
-
-default deny = false
-
-deny {
-	input.TODO == false
-}
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Regula Test Input
+Resources:
+  valid:
+    Type: "AWS::CertificateManager::Certificate"
+    Properties: {}
+  invalid:
+    Type: "AWS::CertificateManager::Certificate"
+    Properties: {}

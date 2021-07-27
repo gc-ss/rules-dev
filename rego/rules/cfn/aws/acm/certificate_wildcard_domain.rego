@@ -12,22 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.tf_aws_api_gateway_method_metrics
+package rules.cfn_acm_certificate_wildcard_domain
 
 __rego__metadoc__ := {
-	"id": "NEW_73db",
-	"title": "CloudWatch Metrics should be enabled",
-	"description": "CloudWatch Metrics should be enabled",
+	"id": "NEW_18c1",
+	"title": "Wildcard In ACM Certificate Domain Name",
+	"description": "Wildcard In ACM Certificate Domain Name",
 	"custom": {
 		"controls": {},
 		"severity": "Medium",
 	},
 }
 
-resource_type = "aws_api_gateway_method_settings"
+input_type = "cfn"
+
+resource_type = "AWS::CertificateManager::Certificate"
 
 default deny = false
 
 deny {
-	input.TODO == false
+	input.Properties.DomainName == "*"
 }

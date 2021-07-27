@@ -66,6 +66,10 @@ def generate_rule(path: str, rule: Dict[str, Any], force: bool = False):
             provider=provider,
             service=service,
             name=name,
+            condition=input_data["condition"].split()
+            if input_data["condition"]
+            else None,
+            attribute=input_data["attribute"],
         )
         # Render the rule rego
         render(

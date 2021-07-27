@@ -26,8 +26,8 @@ __rego__metadoc__ := {
 
 resource_type = "aws_docdb_cluster"
 
-default allow = false
+default deny = false
 
-allow {
-	input.TODO == true
+deny {
+	input.TODO == false
 }

@@ -26,8 +26,8 @@ __rego__metadoc__ := {
 
 resource_type = "aws_api_gateway_deployment"
 
-default allow = false
+default deny = false
 
-allow {
-	input.TODO == true
+deny {
+	input.TODO == false
 }

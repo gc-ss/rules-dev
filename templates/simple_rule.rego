@@ -34,8 +34,14 @@ input_type = "{{ input_type }}"
 
 resource_type = "{{ resource_type }}"
 
-default allow = false
+default deny = false
 
-allow {
-    input.TODO == true
+deny {
+{% if not condition %}
+    input.TODO == false
+{% elif condition[0] == "eq" %}
+    input.{{ attribute }} == "{{ condition[1] }}"
+{% elif condition[0] == "neq" %}
+    input.{{ attribute }} != "{{ condition[1] }}"
+{% endif %}
 }

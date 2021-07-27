@@ -26,8 +26,8 @@ __rego__metadoc__ := {
 
 resource_type = "aws_mq_broker"
 
-default allow = false
+default deny = false
 
-allow {
-	input.TODO == true
+deny {
+	input.TODO == false
 }

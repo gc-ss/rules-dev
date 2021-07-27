@@ -12,22 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.tf_aws_api_gateway_method_metrics
+package rules.cfn_acm_certificate_wildcard_domain
 
-__rego__metadoc__ := {
-	"id": "NEW_73db",
-	"title": "CloudWatch Metrics should be enabled",
-	"description": "CloudWatch Metrics should be enabled",
-	"custom": {
-		"controls": {},
-		"severity": "Medium",
-	},
+import data.tests.rules.cfn.acm.inputs
+
+test_valid {
+	pol = policy with input as inputs.valid.mock_input
+	by_resource_id = {p.id: p.valid | pol[p]}
+	count(by_resource_id) == 1
+	by_resource_id.valid == true
 }
 
-resource_type = "aws_api_gateway_method_settings"
-
-default deny = false
-
-deny {
-	input.TODO == false
+test_invalid {
+	pol = policy with input as inputs.invalid.mock_input
+	by_resource_id = {p.id: p.valid | pol[p]}
+	count(by_resource_id) == 1
+	by_resource_id.invalid == false
 }
