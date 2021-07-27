@@ -31,5 +31,5 @@ resource_type = "AWS::CertificateManager::Certificate"
 default deny = false
 
 deny {
-	input.Properties.DomainName == "*"
+	input.DomainName == "*"
 }

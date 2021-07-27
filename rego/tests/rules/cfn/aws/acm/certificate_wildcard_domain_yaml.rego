@@ -26,11 +26,11 @@ mock_config := {
 	"Description": "Regula Test Input",
 	"Resources": {
 		"invalid": {
-			"Properties": {},
+			"Properties": {"DomainName": "*"},
 			"Type": "AWS::CertificateManager::Certificate",
 		},
 		"valid": {
-			"Properties": {},
+			"Properties": {"DomainName": "not *"},
 			"Type": "AWS::CertificateManager::Certificate",
 		},
 	},

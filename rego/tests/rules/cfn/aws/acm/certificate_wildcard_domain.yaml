@@ -17,7 +17,9 @@ Description: Regula Test Input
 Resources:
   valid:
     Type: "AWS::CertificateManager::Certificate"
-    Properties: {}
+    Properties:
+      DomainName: "not *"
   invalid:
     Type: "AWS::CertificateManager::Certificate"
-    Properties: {}
+    Properties:
+      DomainName: "*"

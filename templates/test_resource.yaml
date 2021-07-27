@@ -17,7 +17,23 @@ Description: Regula Test Input
 Resources:
   valid:
     Type: "{{ resource_type }}"
+{%- if not condition %}
     Properties: {}
+{%- elif condition[0] == "eq" %}
+    Properties:
+      {{ attribute }}: "not {{ condition[1] }}"
+{%- elif condition[0] == "neq" %}
+    Properties:
+      {{ attribute }}: "{{ condition[1] }}"
+{%- endif %}
   invalid:
     Type: "{{ resource_type }}"
+{%- if not condition %}
     Properties: {}
+{%- elif condition[0] == "eq" %}
+    Properties:
+      {{ attribute }}: "{{ condition[1] }}"
+{%- elif condition[0] == "neq" %}
+    Properties:
+      {{ attribute }}: "not {{ condition[1] }}"
+{%- endif %}

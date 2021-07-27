@@ -17,9 +17,17 @@ provider "aws" {
 }
 
 resource "{{ resource_type }}" "valid" {
-
+{% if condition and condition[0] == "eq" %}
+    {{ attribute }} = "not {{ condition[1] }}"
+{% elif condition and condition[0] == "neq" %}
+    {{ attribute }} = "{{ condition[1] }}"
+{% endif %}
 }
 
 resource "{{ resource_type }}" "invalid" {
-
+{% if condition and condition[0] == "eq" %}
+    {{ attribute }} = "{{ condition[1] }}"
+{% elif condition and condition[0] == "neq" %}
+    {{ attribute }} = "not {{ condition[1] }}"
+{% endif %}
 }
