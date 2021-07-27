@@ -30,7 +30,7 @@ mock_config := {
 			"Type": "AWS::CertificateManager::Certificate",
 		},
 		"valid": {
-			"Properties": {"DomainName": "not *"},
+			"Properties": {"DomainName": "ok"},
 			"Type": "AWS::CertificateManager::Certificate",
 		},
 	},

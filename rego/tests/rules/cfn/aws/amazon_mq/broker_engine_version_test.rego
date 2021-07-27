@@ -14,18 +14,14 @@
 
 package rules.cfn_amazon_mq_broker_engine_version
 
-import data.tests.rules.cfn.amazon_mq.inputs
+import data.rego.tests.rules.cfn.aws.amazon_mq.broker_engine_version_yaml as inputs
 
 test_valid {
-	pol = policy with input as inputs.valid.mock_input
-	by_resource_id = {p.id: p.valid | pol[p]}
-	count(by_resource_id) == 1
-	by_resource_id.valid == true
+	resources = inputs.mock_resources
+	not deny with input as resources.valid
 }
 
 test_invalid {
-	pol = policy with input as inputs.invalid.mock_input
-	by_resource_id = {p.id: p.valid | pol[p]}
-	count(by_resource_id) == 1
-	by_resource_id.invalid == false
+	resources = inputs.mock_resources
+	deny with input as resources.invalid
 }

@@ -29,5 +29,5 @@ resource_type = "aws_mq_broker"
 default deny = false
 
 deny {
-	input.TODO == false
+	input.TODO == "TODO"
 }

@@ -31,5 +31,5 @@ resource_type = "AWS::ApiGateway::Method"
 default deny = false
 
 deny {
-	input.TODO == false
+	input.TODO == "TODO"
 }

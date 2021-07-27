@@ -14,18 +14,14 @@
 
 package rules.tf_aws_api_gateway_stage_xray_enabled
 
-import data.tests.rules.tf.aws.api_gateway.inputs
+import data.rego.tests.rules.tf.aws.api_gateway.stage_xray_enabled as inputs
 
 test_valid {
-	pol = policy with input as inputs.valid.mock_input
-	by_resource_id = {p.id: p.valid | pol[p]}
-	count(by_resource_id) == 1
-	by_resource_id.valid == true
+	resources = inputs.mock_resources
+	not deny with input as resources.valid
 }
 
 test_invalid {
-	pol = policy with input as inputs.invalid.mock_input
-	by_resource_id = {p.id: p.valid | pol[p]}
-	count(by_resource_id) == 1
-	by_resource_id.invalid == false
+	resources = inputs.mock_resources
+	deny with input as resources.invalid
 }

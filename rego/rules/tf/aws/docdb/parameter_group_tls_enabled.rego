@@ -29,5 +29,5 @@ resource_type = "aws_docdb_cluster_parameter_group"
 default deny = false
 
 deny {
-	input.TODO == false
+	input.TODO == "TODO"
 }

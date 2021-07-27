@@ -12,22 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.tf_aws_amazon_mq_broker_publicly_exposed
+{% if input_type == "cfn" %}
+package rules.{{ input_type }}_{{ service }}_{{ name }}
 
-__rego__metadoc__ := {
-	"id": "NEW_2267",
-	"title": "AmazonMQ Broker should not be publicly exposed",
-	"description": "AmazonMQ Broker should not be publicly exposed",
-	"custom": {
-		"controls": {},
-		"severity": "High",
-	},
+import data.rego.tests.rules.cfn.aws.{{ service }}.{{ name }}_yaml as inputs
+{% else %}
+package rules.{{ input_type }}_{{ provider }}_{{ service }}_{{ name }}
+
+import data.rego.tests.rules.{{ input_type }}.{{ provider }}.{{ service }}.{{ name }} as inputs
+{% endif %}
+
+test_valid {
+    resources = inputs.mock_resources
+	not deny with input as resources["valid"]
 }
 
-resource_type = "aws_mq_broker"
-
-default deny = false
-
-deny {
-	input.TODO == "TODO"
+test_invalid {
+	resources = inputs.mock_resources
+	deny with input as resources["invalid"]
 }

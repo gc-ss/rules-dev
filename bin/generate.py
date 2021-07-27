@@ -18,6 +18,7 @@ env = Environment(
 rule_template = env.get_template("rule.rego")
 simple_rule_template = env.get_template("simple_rule.rego")
 test_template = env.get_template("rule_test.rego")
+simple_test_template = env.get_template("simple_rule_test.rego")
 test_tf_template = env.get_template("test_resource.tf")
 test_cfn_template = env.get_template("test_resource.yaml")
 
@@ -52,6 +53,7 @@ def render(template: jinja2.Template, path: str, force: bool, **kwargs):
 def generate_rule(path: str, rule: Dict[str, Any], force: bool = False):
     provider, service, filename = path.split("/")
     name = filename.split(".")[0]
+    is_simple = rule["rule_type"] == "simple"
     for input_type, input_data in rule["input_types"].items():
         rule_dir, test_dir = rule_dirs(path, input_type)
         os.makedirs(rule_dir, exist_ok=True)
@@ -73,14 +75,14 @@ def generate_rule(path: str, rule: Dict[str, Any], force: bool = False):
         )
         # Render the rule rego
         render(
-            rule_template if rule["rule_type"] != "simple" else simple_rule_template,
+            rule_template if not is_simple else simple_rule_template,
             os.path.join(rule_dir, filename),
             force=force,
             **rule_data,
         )
         # Render the rule test
         render(
-            test_template,
+            test_template if not is_simple else simple_test_template,
             os.path.join(test_dir, f"{name}_test.rego"),
             force=force,
             **rule_data,

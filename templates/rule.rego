@@ -39,7 +39,13 @@ resource_type = "MULTIPLE"
 resources = fugue.resources("{{ resource_type }}")
 
 is_invalid(resource) {
-    false # TODO
+{% if not condition %}
+    resource.TODO == "TODO"
+{% elif condition[0] == "eq" %}
+    resource.{{ attribute }} == {{ condition[1] }}
+{% elif condition[0] == "neq" %}
+    resource.{{ attribute }} != {{ condition[1] }}
+{% endif %}
 }
 
 policy[p] {

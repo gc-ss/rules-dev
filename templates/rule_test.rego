@@ -15,23 +15,23 @@
 {% if input_type == "cfn" %}
 package rules.{{ input_type }}_{{ service }}_{{ name }}
 
-import data.tests.rules.cfn.{{ service }}.inputs
+import data.rego.tests.rules.cfn.aws.{{ service }}.{{ name }}_yaml as inputs
 {% else %}
 package rules.{{ input_type }}_{{ provider }}_{{ service }}_{{ name }}
 
-import data.tests.rules.{{ input_type }}.{{ provider }}.{{ service }}.inputs
+import data.rego.tests.rules.{{ input_type }}.{{ provider }}.{{ service }}.{{ name }} as inputs
 {% endif %}
 
 test_valid {
-    pol = policy with input as inputs.valid.mock_input
+    pol = policy with input as inputs.mock_input
     by_resource_id = {p.id: p.valid | pol[p]}
-    count(by_resource_id) == 1
+    count(by_resource_id) == 2
     by_resource_id["valid"] == true
 }
 
 test_invalid {
-    pol = policy with input as inputs.invalid.mock_input
+    pol = policy with input as inputs.mock_input
     by_resource_id = {p.id: p.valid | pol[p]}
-    count(by_resource_id) == 1
+    count(by_resource_id) == 2
     by_resource_id["invalid"] == false
 }

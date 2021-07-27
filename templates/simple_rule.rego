@@ -38,10 +38,10 @@ default deny = false
 
 deny {
 {% if not condition %}
-    input.TODO == false
+    input.TODO == "TODO"
 {% elif condition[0] == "eq" %}
-    input.{{ attribute }} == "{{ condition[1] }}"
+    input.{{ attribute }} == {{ condition[1] }}
 {% elif condition[0] == "neq" %}
-    input.{{ attribute }} != "{{ condition[1] }}"
+    input.{{ attribute }} != {{ condition[1] }}
 {% endif %}
 }

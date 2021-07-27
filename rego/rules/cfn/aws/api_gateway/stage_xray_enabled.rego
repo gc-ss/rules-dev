@@ -31,5 +31,5 @@ resource_type = "AWS::ApiGateway::Stage"
 default deny = false
 
 deny {
-	input.TODO == false
+	input.TODO == "TODO"
 }

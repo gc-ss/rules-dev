@@ -31,5 +31,5 @@ resource_type = "AWS::DocDB::DBCluster"
 default deny = false
 
 deny {
-	input.TODO == false
+	input.TODO == "TODO"
 }

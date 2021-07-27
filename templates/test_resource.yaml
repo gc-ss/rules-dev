@@ -21,10 +21,10 @@ Resources:
     Properties: {}
 {%- elif condition[0] == "eq" %}
     Properties:
-      {{ attribute }}: "not {{ condition[1] }}"
+      {{ attribute }}: "ok"
 {%- elif condition[0] == "neq" %}
     Properties:
-      {{ attribute }}: "{{ condition[1] }}"
+      {{ attribute }}: {{ condition[1] }}
 {%- endif %}
   invalid:
     Type: "{{ resource_type }}"
@@ -32,8 +32,8 @@ Resources:
     Properties: {}
 {%- elif condition[0] == "eq" %}
     Properties:
-      {{ attribute }}: "{{ condition[1] }}"
+      {{ attribute }}: {{ condition[1] }}
 {%- elif condition[0] == "neq" %}
     Properties:
-      {{ attribute }}: "not {{ condition[1] }}"
+      {{ attribute }}: "ok"
 {%- endif %}

@@ -26,11 +26,11 @@ mock_config := {
 	"Description": "Regula Test Input",
 	"Resources": {
 		"invalid": {
-			"Properties": {},
+			"Properties": {"PubliclyAccessible": true},
 			"Type": "AWS::AmazonMQ::Broker",
 		},
 		"valid": {
-			"Properties": {},
+			"Properties": {"PubliclyAccessible": "ok"},
 			"Type": "AWS::AmazonMQ::Broker",
 		},
 	},

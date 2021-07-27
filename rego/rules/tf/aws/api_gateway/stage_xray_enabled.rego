@@ -29,5 +29,5 @@ resource_type = "aws_api_gateway_stage"
 default deny = false
 
 deny {
-	input.TODO == false
+	input.TODO == "TODO"
 }

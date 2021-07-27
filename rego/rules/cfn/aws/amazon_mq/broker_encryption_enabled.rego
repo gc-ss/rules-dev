@@ -31,5 +31,5 @@ resource_type = "AWS::AmazonMQ::Broker"
 default deny = false
 
 deny {
-	input.TODO == false
+	input.TODO == "TODO"
 }
