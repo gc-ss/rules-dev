@@ -2,8 +2,7 @@ import argparse
 import csv
 import yaml
 from dataclasses import dataclass, asdict
-from typing import List, Dict, Optional
-from lib.language import normalize
+from typing import Any, Dict, List, Optional
 
 
 _service_aliases = {
@@ -20,26 +19,24 @@ class Rule:
     """
 
     name: str
+    path: str
     severity: str
+    summary: str
     description: str
     rule_id: str
     service: str
-    resource_types: Dict[str, str]
-    resource_type_description: Dict[str, str]
+    provider: str
+    rule_type: str
+    runtime: bool
+    input_types: Dict[str, Dict[str, Any]]
 
 
-def get_rule_path(name: str, provider: str, service: str, type_name: str) -> str:
-    name_parts = normalize(name).split()
-    ignore = {"doc", "db"}
-    ignore.update(normalize(provider).split())
-    ignore.update(normalize(service).split())
-    ignore.update(normalize(type_name).split())
-    unique_parts = []
-    for part in name_parts:
-        if part not in ignore:
-            unique_parts.append(part)
-    rego_name = "_".join(unique_parts)
-    return f"{provider.lower()}/{service.lower()}/{rego_name}.rego"
+def get_rule_path(provider: str, service: str, name: str) -> str:
+    return f"{provider.lower()}/{service.lower()}/{name}.rego"
+
+
+def types_from_field(type_str: str) -> List[str]:
+    return [t.strip() for t in type_str.split(",")]
 
 
 def get_rules(metadata_path: str) -> List[Rule]:
@@ -47,31 +44,39 @@ def get_rules(metadata_path: str) -> List[Rule]:
     with open(metadata_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            if row["ready"].lower() not in ["1", "yes"]:
+            if row["status"] != "ready":
                 continue
-            resource_types = {}
-            if row["cf_types"]:
-                resource_types["cfn"] = row["cf_types"]
-            if row["tf_types"]:
-                resource_types["tf"] = row["tf_types"]
-            fugue_type = row.get("fugue_type") or "Missing.Missing.Missing"
+            input_types = {}
+            if row["cfn"] == "yes":
+                input_types["cfn"] = {
+                    "resource_type": types_from_field(row["cfn_type"])[0],
+                    "attribute": row["cfn_attr"] or None,
+                    "condition": row["cfn_condition"] or None,
+                }
+            if row["tf"] == "yes":
+                input_types["tf"] = {
+                    "resource_type": types_from_field(row["tf_type"])[0],
+                    "attribute": row["tf_attr"] or None,
+                    "condition": row["tf_condition"] or None,
+                }
+            fugue_type = row["resource_type"]
             provider, service, type_name = fugue_type.split(".")
             service = service.lower()
             if service in _service_aliases:
                 service = _service_aliases[service]
-            type_name_lower = type_name.lower()
             rules.append(
                 Rule(
-                    name=get_rule_path(row["name"], provider, service, type_name),
+                    rule_type=row["rule_type"],
+                    name=row["name"],
+                    path=get_rule_path(provider, service, row["name"]),
+                    provider=provider.lower(),
                     service=service.lower(),
-                    severity=row.get("severity", "Low"),
-                    rule_id=row["new_id"],
-                    description=row["name"],
-                    resource_types=resource_types,
-                    resource_type_description={
-                        "singular": type_name_lower,
-                        "plural": type_name_lower + "s",
-                    },
+                    severity=row["severity"],
+                    rule_id=row["rule_id"],
+                    runtime=row["runtime"] == "yes",
+                    summary=row["summary"],
+                    description=row["description"] or row["summary"],
+                    input_types=input_types,
                 )
             )
     return rules
@@ -98,16 +103,13 @@ def main():
     )
     args = parser.parse_args()
 
-    rules = dict((r.name, asdict(r)) for r in get_rules("metadata.csv"))
+    rules = dict((r.path, asdict(r)) for r in get_rules("metadata.csv"))
 
     services = set(args.services)
     if services:
         for name, rule in list(rules.items()):
             if rule["service"] not in services:
                 rules.pop(name)
-
-    for rule in rules.values():
-        rule.pop("name")
 
     try:
         metadata = read_yaml("metadata.yaml")

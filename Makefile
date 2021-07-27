@@ -31,7 +31,7 @@ gen: venv
 
 .PHONY: metadata
 metadata:
-	python bin/update_metadata.py $(SERVICES)
+	PYTHONPATH=. python bin/update_metadata.py $(SERVICES)
 
 .PHONY: clean
 clean:
