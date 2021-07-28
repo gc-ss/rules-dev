@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
+package rules.cfn_amazon_mq_broker_logs_general
 
 __rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
+	"id": "NEW_65f7",
+	"title": "AmazonMQ Broker should have general logging enabled",
+	"description": "AmazonMQ Broker should have general logging enabled",
 	"custom": {
 		"controls": {},
 		"severity": "Medium",
@@ -26,10 +26,10 @@ __rego__metadoc__ := {
 
 input_type = "cfn"
 
-resource_type = "AWS::DocDB::DBCluster"
+resource_type = "AWS::AmazonMQ::Broker"
 
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+	object.get(input, "Logs.General", null) != true
 }

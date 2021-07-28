@@ -17,17 +17,25 @@ provider "aws" {
 }
 
 resource "{{ resource_type }}" "valid" {
-{% if condition and condition[0] == "eq" %}
-    {{ attribute }} = "not {{ condition[1] }}"
-{% elif condition and condition[0] == "neq" %}
-    {{ attribute }} = "{{ condition[1] }}"
-{% endif %}
+{%- if not condition %}
+  # TODO
+{%- elif condition[0] == "eq" %}
+    {{ attribute }} = "PLACEHOLDER" # FIXME
+{%- elif condition[0] == "neq" %}
+    {{ attribute }} = {{ condition[1] }}
+{%- else %}
+    {{ attribute }} = "PLACEHOLDER" # FIXME
+{%- endif %}
 }
 
 resource "{{ resource_type }}" "invalid" {
-{% if condition and condition[0] == "eq" %}
-    {{ attribute }} = "{{ condition[1] }}"
-{% elif condition and condition[0] == "neq" %}
-    {{ attribute }} = "not {{ condition[1] }}"
-{% endif %}
+{%- if not condition %}
+  # TODO
+{%- elif condition[0] == "eq" %}
+    {{ attribute }} = {{ condition[1] }}
+{%- elif condition[0] == "neq" %}
+    {{ attribute }} = "PLACEHOLDER" # FIXME
+{%- else %}
+    {{ attribute }} = "PLACEHOLDER" # FIXME
+{%- endif %}
 }

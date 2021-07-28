@@ -12,24 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
+package rules.tf_aws_docdb_cluster_storage_encrypted
 
 __rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
+	"id": "NEW_0f21",
+	"title": "DocDB Clusters should use encrypted storage",
+	"description": "DocDB Clusters should use encrypted storage",
 	"custom": {
 		"controls": {},
 		"severity": "Medium",
 	},
 }
 
-input_type = "cfn"
-
-resource_type = "AWS::DocDB::DBCluster"
+resource_type = "aws_docdb_cluster"
 
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+	object.get(input, "storage_encrypted", null) != true
 }

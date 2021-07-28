@@ -12,24 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
+package rules.tf_aws_api_gateway_method_settings_metrics_enabled
 
 __rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
+	"id": "NEW_73db",
+	"title": "API Gateway Method Settings should have CloudWatch metrics enabled",
+	"description": "API Gateway Method Settings should have CloudWatch metrics enabled",
 	"custom": {
 		"controls": {},
 		"severity": "Medium",
 	},
 }
 
-input_type = "cfn"
-
-resource_type = "AWS::DocDB::DBCluster"
+resource_type = "aws_api_gateway_method_settings"
 
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+	object.get(input, "settings.metrics_enabled", null) != true
 }

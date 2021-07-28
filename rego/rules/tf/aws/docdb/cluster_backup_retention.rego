@@ -29,5 +29,5 @@ resource_type = "aws_docdb_cluster"
 default deny = false
 
 deny {
-	input.TODO == "TODO"
+	object.get(input, "backup_retention_period", "_UNSET_") == "_UNSET_"
 }

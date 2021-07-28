@@ -12,24 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
+package rules.tf_aws_api_gateway_stage_access_log_settings
 
 __rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
+	"id": "NEW_aa7d",
+	"title": "API Gateway Stage should have access logging enabled",
+	"description": "API Gateway Stage should have access logging enabled",
 	"custom": {
 		"controls": {},
 		"severity": "Medium",
 	},
 }
 
-input_type = "cfn"
-
-resource_type = "AWS::DocDB::DBCluster"
+resource_type = "aws_api_gateway_stage"
 
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+	object.get(input, "access_log_settings.destination_arn", "_UNSET_") == "_UNSET_"
 }

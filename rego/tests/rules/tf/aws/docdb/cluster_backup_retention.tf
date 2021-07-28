@@ -17,9 +17,9 @@ provider "aws" {
 }
 
 resource "aws_docdb_cluster" "valid" {
-
+    backup_retention_period = "PLACEHOLDER" # FIXME
 }
 
 resource "aws_docdb_cluster" "invalid" {
-
+    backup_retention_period = "PLACEHOLDER" # FIXME
 }

@@ -12,24 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
+package rules.tf_aws_acm_certificate_wildcard_domain_name
 
 __rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
+	"id": "NEW_18c1",
+	"title": "Wildcard In ACM Certificate Domain Name",
+	"description": "Wildcard In ACM Certificate Domain Name",
 	"custom": {
 		"controls": {},
-		"severity": "Medium",
+		"severity": "Low",
 	},
 }
 
-input_type = "cfn"
-
-resource_type = "AWS::DocDB::DBCluster"
+resource_type = "aws_acm_certificate"
 
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+	object.get(input, "domain_name", null) == "*"
 }

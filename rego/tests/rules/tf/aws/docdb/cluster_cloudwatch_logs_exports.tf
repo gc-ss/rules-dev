@@ -12,24 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
-
-__rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
-	"custom": {
-		"controls": {},
-		"severity": "Medium",
-	},
+provider "aws" {
+  region = "us-east-1"
 }
 
-input_type = "cfn"
+resource "aws_docdb_cluster" "valid" {
+    enabled_cloudwatch_logs_exports = "PLACEHOLDER" # FIXME
+}
 
-resource_type = "AWS::DocDB::DBCluster"
-
-default deny = false
-
-deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+resource "aws_docdb_cluster" "invalid" {
+    enabled_cloudwatch_logs_exports = "PLACEHOLDER" # FIXME
 }

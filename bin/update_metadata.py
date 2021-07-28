@@ -51,13 +51,13 @@ def get_rules(metadata_path: str) -> List[Rule]:
                 input_types["cfn"] = {
                     "resource_type": types_from_field(row["cfn_type"])[0],
                     "attribute": row["cfn_attr"] or None,
-                    "condition": row["cfn_condition"] or None,
+                    "condition": row["cfn_deny_condition"] or None,
                 }
             if row["tf"] == "yes":
                 input_types["tf"] = {
                     "resource_type": types_from_field(row["tf_type"])[0],
                     "attribute": row["tf_attr"] or None,
-                    "condition": row["tf_condition"] or None,
+                    "condition": row["tf_deny_condition"] or None,
                 }
             fugue_type = row["resource_type"]
             provider, service, type_name = fugue_type.split(".")

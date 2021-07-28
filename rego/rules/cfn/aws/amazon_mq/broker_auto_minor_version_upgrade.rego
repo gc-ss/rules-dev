@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
+package rules.cfn_amazon_mq_broker_auto_minor_version_upgrade
 
 __rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
+	"id": "NEW_bd76",
+	"title": "AmazonMQ Broker should have version upgrades enabled",
+	"description": "AmazonMQ Broker should have version upgrades enabled",
 	"custom": {
 		"controls": {},
 		"severity": "Medium",
@@ -26,10 +26,10 @@ __rego__metadoc__ := {
 
 input_type = "cfn"
 
-resource_type = "AWS::DocDB::DBCluster"
+resource_type = "AWS::AmazonMQ::Broker"
 
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+	object.get(input, "AutoMinorVersionUpgrade", null) != true
 }

@@ -39,13 +39,21 @@ resource_type = "MULTIPLE"
 resources = fugue.resources("{{ resource_type }}")
 
 is_invalid(resource) {
-{% if not condition %}
-    resource.TODO == "TODO"
-{% elif condition[0] == "eq" %}
-    resource.{{ attribute }} == {{ condition[1] }}
-{% elif condition[0] == "neq" %}
-    resource.{{ attribute }} != {{ condition[1] }}
-{% endif %}
+{%- if not condition %}
+    resource.TODO == "TODO" # FIXME
+{%- elif condition[0] == "eq" %}
+    object.get(resource, "{{ attribute }}", null) == {{ condition[1] }}
+{%- elif condition[0] == "neq" %}
+    object.get(resource, "{{ attribute }}", null) != {{ condition[1] }}
+{%- elif condition[0] == "is_set" %}
+    object.get(resource, "{{ attribute }}", "_UNSET_") != "_UNSET_"
+{%- elif condition[0] == "is_not_set" %}
+    object.get(resource, "{{ attribute }}", "_UNSET_") == "_UNSET_"
+{%- elif condition[0] == "len" and condition[1] == "neq" %}
+    count(object.get(resource, "{{ attribute }}", [])) != {{ condition[2] }}
+{%- elif condition[0] == "len" and condition[1] == "eq" %}
+    count(object.get(resource, "{{ attribute }}", [])) == {{ condition[2] }}
+{%- endif %}
 }
 
 policy[p] {

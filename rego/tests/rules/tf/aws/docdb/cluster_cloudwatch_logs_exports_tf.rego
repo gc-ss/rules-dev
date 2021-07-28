@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-package rego.tests.rules.tf.aws.docdb.cluster_backup_retention_tf
+package rego.tests.rules.tf.aws.docdb.cluster_cloudwatch_logs_exports_tf
 
 import data.fugue.resource_view.resource_view_input
 
@@ -25,17 +25,17 @@ mock_config := {
 	"hcl_resource_view_version": "0.0.1",
 	"resources": {
 		"aws_docdb_cluster.invalid": {
-			"_filepath": "rego/tests/rules/tf/aws/docdb/cluster_backup_retention.tf",
+			"_filepath": "rego/tests/rules/tf/aws/docdb/cluster_cloudwatch_logs_exports.tf",
 			"_provider": "aws",
 			"_type": "aws_docdb_cluster",
-			"backup_retention_period": "PLACEHOLDER",
+			"enabled_cloudwatch_logs_exports": "PLACEHOLDER",
 			"id": "aws_docdb_cluster.invalid",
 		},
 		"aws_docdb_cluster.valid": {
-			"_filepath": "rego/tests/rules/tf/aws/docdb/cluster_backup_retention.tf",
+			"_filepath": "rego/tests/rules/tf/aws/docdb/cluster_cloudwatch_logs_exports.tf",
 			"_provider": "aws",
 			"_type": "aws_docdb_cluster",
-			"backup_retention_period": "PLACEHOLDER",
+			"enabled_cloudwatch_logs_exports": "PLACEHOLDER",
 			"id": "aws_docdb_cluster.valid",
 		},
 	},

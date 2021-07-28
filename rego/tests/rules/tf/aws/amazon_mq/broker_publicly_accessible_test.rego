@@ -12,24 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
+package rules.tf_aws_amazon_mq_broker_publicly_accessible
 
-__rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
-	"custom": {
-		"controls": {},
-		"severity": "Medium",
-	},
+import data.rego.tests.rules.tf.aws.amazon_mq.broker_publicly_accessible as inputs
+
+test_valid {
+	resources = inputs.mock_resources
+	not deny with input as resources.valid
 }
 
-input_type = "cfn"
-
-resource_type = "AWS::DocDB::DBCluster"
-
-default deny = false
-
-deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+test_invalid {
+	resources = inputs.mock_resources
+	deny with input as resources.invalid
 }

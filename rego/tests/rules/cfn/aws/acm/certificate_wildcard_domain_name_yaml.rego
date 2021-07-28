@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-package rego.tests.rules.tf.aws.docdb.cluster_backup_retention_tf
+package rego.tests.rules.cfn.aws.acm.certificate_wildcard_domain_name_yaml
 
 import data.fugue.resource_view.resource_view_input
 
@@ -22,21 +22,16 @@ mock_input := ret {
 mock_resources := mock_input.resources
 
 mock_config := {
-	"hcl_resource_view_version": "0.0.1",
-	"resources": {
-		"aws_docdb_cluster.invalid": {
-			"_filepath": "rego/tests/rules/tf/aws/docdb/cluster_backup_retention.tf",
-			"_provider": "aws",
-			"_type": "aws_docdb_cluster",
-			"backup_retention_period": "PLACEHOLDER",
-			"id": "aws_docdb_cluster.invalid",
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "Regula Test Input",
+	"Resources": {
+		"invalid": {
+			"Properties": {"DomainName": "*"},
+			"Type": "AWS::CertificateManager::Certificate",
 		},
-		"aws_docdb_cluster.valid": {
-			"_filepath": "rego/tests/rules/tf/aws/docdb/cluster_backup_retention.tf",
-			"_provider": "aws",
-			"_type": "aws_docdb_cluster",
-			"backup_retention_period": "PLACEHOLDER",
-			"id": "aws_docdb_cluster.valid",
+		"valid": {
+			"Properties": {"DomainName": "PLACEHOLDER"},
+			"Type": "AWS::CertificateManager::Certificate",
 		},
 	},
 }

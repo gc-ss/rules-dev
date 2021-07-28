@@ -12,24 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
-
-__rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
-	"custom": {
-		"controls": {},
-		"severity": "Medium",
-	},
-}
-
-input_type = "cfn"
-
-resource_type = "AWS::DocDB::DBCluster"
-
-default deny = false
-
-deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
-}
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Regula Test Input
+Resources:
+  valid:
+    Type: "AWS::AmazonMQ::Broker"
+    Properties:
+      AutoMinorVersionUpgrade: true
+  invalid:
+    Type: "AWS::AmazonMQ::Broker"
+    Properties:
+      AutoMinorVersionUpgrade: "PLACEHOLDER" # FIXME

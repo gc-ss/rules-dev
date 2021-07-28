@@ -18,22 +18,28 @@ Resources:
   valid:
     Type: "{{ resource_type }}"
 {%- if not condition %}
-    Properties: {}
+    Properties: {} # TODO
 {%- elif condition[0] == "eq" %}
     Properties:
-      {{ attribute }}: "ok"
+      {{ attribute }}: "PLACEHOLDER" # FIXME
 {%- elif condition[0] == "neq" %}
     Properties:
       {{ attribute }}: {{ condition[1] }}
+{%- else %}
+    Properties:
+      {{ attribute }}: "PLACEHOLDER" # FIXME
 {%- endif %}
   invalid:
     Type: "{{ resource_type }}"
 {%- if not condition %}
-    Properties: {}
+    Properties: {} # TODO
 {%- elif condition[0] == "eq" %}
     Properties:
       {{ attribute }}: {{ condition[1] }}
 {%- elif condition[0] == "neq" %}
     Properties:
-      {{ attribute }}: "ok"
+      {{ attribute }}: "PLACEHOLDER" # FIXME
+{%- else %}
+    Properties:
+      {{ attribute }}: "PLACEHOLDER" # FIXME
 {%- endif %}

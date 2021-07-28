@@ -12,24 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
+package rules.tf_aws_docdb_cluster_cloudwatch_logs_exports
 
 __rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
+	"id": "NEW_17ef",
+	"title": "DocDB Clusters should export logs to cloudwatch",
+	"description": "DocDB Clusters should export logs to cloudwatch",
 	"custom": {
 		"controls": {},
 		"severity": "Medium",
 	},
 }
 
-input_type = "cfn"
-
-resource_type = "AWS::DocDB::DBCluster"
+resource_type = "aws_docdb_cluster"
 
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+	count(object.get(input, "enabled_cloudwatch_logs_exports", [])) != 2
 }

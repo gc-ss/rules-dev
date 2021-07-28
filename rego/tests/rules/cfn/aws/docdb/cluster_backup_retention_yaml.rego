@@ -26,11 +26,11 @@ mock_config := {
 	"Description": "Regula Test Input",
 	"Resources": {
 		"invalid": {
-			"Properties": {},
+			"Properties": {"BackupRetentionPeriod": "PLACEHOLDER"},
 			"Type": "AWS::DocDB::DBCluster",
 		},
 		"valid": {
-			"Properties": {},
+			"Properties": {"BackupRetentionPeriod": "PLACEHOLDER"},
 			"Type": "AWS::DocDB::DBCluster",
 		},
 	},

@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-package rego.tests.rules.tf.aws.docdb.cluster_backup_retention_tf
+package rego.tests.rules.tf.aws.api_gateway.stage_access_log_settings_tf
 
 import data.fugue.resource_view.resource_view_input
 
@@ -24,19 +24,17 @@ mock_resources := mock_input.resources
 mock_config := {
 	"hcl_resource_view_version": "0.0.1",
 	"resources": {
-		"aws_docdb_cluster.invalid": {
-			"_filepath": "rego/tests/rules/tf/aws/docdb/cluster_backup_retention.tf",
+		"aws_api_gateway_stage.invalid": {
+			"_filepath": "rego/tests/rules/tf/aws/api_gateway/stage_access_log_settings.tf",
 			"_provider": "aws",
-			"_type": "aws_docdb_cluster",
-			"backup_retention_period": "PLACEHOLDER",
-			"id": "aws_docdb_cluster.invalid",
+			"_type": "aws_api_gateway_stage",
+			"id": "aws_api_gateway_stage.invalid",
 		},
-		"aws_docdb_cluster.valid": {
-			"_filepath": "rego/tests/rules/tf/aws/docdb/cluster_backup_retention.tf",
+		"aws_api_gateway_stage.valid": {
+			"_filepath": "rego/tests/rules/tf/aws/api_gateway/stage_access_log_settings.tf",
 			"_provider": "aws",
-			"_type": "aws_docdb_cluster",
-			"backup_retention_period": "PLACEHOLDER",
-			"id": "aws_docdb_cluster.valid",
+			"_type": "aws_api_gateway_stage",
+			"id": "aws_api_gateway_stage.valid",
 		},
 	},
 }

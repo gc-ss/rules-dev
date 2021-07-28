@@ -12,24 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package rules.cfn_docdb_cluster_backup_retention
+package rules.tf_aws_amazon_mq_broker_publicly_accessible
 
 __rego__metadoc__ := {
-	"id": "NEW_ca25",
-	"title": "DocDB Clusters should have a backup retention period set",
-	"description": "DocDB Clusters should have a backup retention period set",
+	"id": "NEW_2267",
+	"title": "AmazonMQ Broker should not be publicly exposed",
+	"description": "AmazonMQ Broker should not be publicly exposed",
 	"custom": {
 		"controls": {},
-		"severity": "Medium",
+		"severity": "High",
 	},
 }
 
-input_type = "cfn"
-
-resource_type = "AWS::DocDB::DBCluster"
+resource_type = "aws_mq_broker"
 
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+	object.get(input, "publicly_accessible", null) == true
 }
