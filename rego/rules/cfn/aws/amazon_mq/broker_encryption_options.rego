@@ -31,5 +31,5 @@ resource_type = "AWS::AmazonMQ::Broker"
 default deny = false
 
 deny {
-	object.get(input, "EncryptionOptions.KmsKeyId", "_UNSET_") == "_UNSET_"
+	object.get(input, "EncryptionOptions.KmsKeyId", null) == null
 }

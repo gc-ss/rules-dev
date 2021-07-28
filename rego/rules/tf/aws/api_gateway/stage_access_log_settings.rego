@@ -29,5 +29,5 @@ resource_type = "aws_api_gateway_stage"
 default deny = false
 
 deny {
-	object.get(input, "access_log_settings.destination_arn", "_UNSET_") == "_UNSET_"
+	object.get(input, "access_log_settings.destination_arn", null) == null
 }

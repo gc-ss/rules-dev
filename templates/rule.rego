@@ -46,9 +46,9 @@ is_invalid(resource) {
 {%- elif condition[0] == "neq" %}
     object.get(resource, "{{ attribute }}", null) != {{ condition[1] }}
 {%- elif condition[0] == "is_set" %}
-    object.get(resource, "{{ attribute }}", "_UNSET_") != "_UNSET_"
+    object.get(resource, "{{ attribute }}", null) != null
 {%- elif condition[0] == "is_not_set" %}
-    object.get(resource, "{{ attribute }}", "_UNSET_") == "_UNSET_"
+    object.get(resource, "{{ attribute }}", null) == null
 {%- elif condition[0] == "len" and condition[1] == "neq" %}
     count(object.get(resource, "{{ attribute }}", [])) != {{ condition[2] }}
 {%- elif condition[0] == "len" and condition[1] == "eq" %}

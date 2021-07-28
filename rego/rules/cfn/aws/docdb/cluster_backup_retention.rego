@@ -31,5 +31,5 @@ resource_type = "AWS::DocDB::DBCluster"
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", "_UNSET_") == "_UNSET_"
+	object.get(input, "BackupRetentionPeriod", null) == null
 }

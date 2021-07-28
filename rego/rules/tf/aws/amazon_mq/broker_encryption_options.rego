@@ -29,5 +29,5 @@ resource_type = "aws_mq_broker"
 default deny = false
 
 deny {
-	object.get(input, "encryption_options.kms_key_id", "_UNSET_") == "_UNSET_"
+	object.get(input, "encryption_options.kms_key_id", null) == null
 }

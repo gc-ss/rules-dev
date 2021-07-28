@@ -31,5 +31,5 @@ resource_type = "AWS::ApiGateway::Stage"
 default deny = false
 
 deny {
-	object.get(input, "AccessLogSetting.DestinationArn", "_UNSET_") == "_UNSET_"
+	object.get(input, "AccessLogSetting.DestinationArn", null) == null
 }
