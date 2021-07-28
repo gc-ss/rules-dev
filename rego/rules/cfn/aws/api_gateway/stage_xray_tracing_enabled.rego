@@ -14,6 +14,8 @@
 
 package rules.cfn_api_gateway_stage_xray_tracing_enabled
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_374e",
 	"title": "API Gateway Stage should have xray tracing enabled",
@@ -31,5 +33,5 @@ resource_type = "AWS::ApiGateway::Stage"
 default deny = false
 
 deny {
-	object.get(input, "TracingEnabled", null) != true
+	getattr(input, "TracingEnabled", null) != true
 }

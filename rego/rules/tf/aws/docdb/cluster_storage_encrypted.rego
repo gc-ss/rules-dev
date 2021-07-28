@@ -14,6 +14,8 @@
 
 package rules.tf_aws_docdb_cluster_storage_encrypted
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_0f21",
 	"title": "DocDB Clusters should use encrypted storage",
@@ -29,5 +31,5 @@ resource_type = "aws_docdb_cluster"
 default deny = false
 
 deny {
-	object.get(input, "storage_encrypted", null) != true
+	getattr(input, "storage_encrypted", null) != true
 }

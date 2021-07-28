@@ -1,26 +1,30 @@
 package curtis
 
-import data.fugue.resource_view.resource_view_input
+obj := {"foo": {"bar": 42}}
 
-foo := "42"
+# getattr(obj, attribute) = ret {
+# 	parts = split(attribute, ".")
+# 	count(parts) == 1
+# 	ret = object.get(obj, attribute, null)
+# } else = ret {
+# 	parts = split(attribute, ".")
+# 	count(parts) == 2
+# 	rest = concat(".", array.slice(parts, 1, count(parts)))
+# 	nested_obj = object.get(obj, parts[0], {})
+# 	is_object(nested_obj)
+# 	ret = object.get(nested_obj, rest, null)
+# } else = ret {
+# 	ret = null
+# }
 
-mock_input := ret {
-	ret = resource_view_input with input as mock_config
-}
-
-mock_resources := mock_input.resources
-
-mock_config := {
-	"AWSTemplateFormatVersion": "2010-09-09",
-	"Description": "Regula Test Input",
-	"Resources": {
-		"invalid": {
-			"Properties": {"DomainName": "*"},
-			"Type": "AWS::CertificateManager::Certificate",
-		},
-		"valid": {
-			"Properties": {"DomainName": "ok"},
-			"Type": "AWS::CertificateManager::Certificate",
-		},
-	},
+getattr(obj, attribute) = ret {
+	not contains(attribute, ".")
+	ret = object.get(obj, attribute, null)
+} else = ret {
+	parts = split(attribute, ".")
+	json_path = concat("/", ["", concat("/", parts)])
+	patched = json.patch(obj, [{"op": "copy", "from": json_path, "path": "__value"}])
+	ret = object.get(patched, "__value", null)
+} else = ret {
+	ret = null
 }

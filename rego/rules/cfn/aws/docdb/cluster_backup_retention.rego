@@ -14,6 +14,8 @@
 
 package rules.cfn_docdb_cluster_backup_retention
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_ca25",
 	"title": "DocDB Clusters should have a backup retention period set",
@@ -31,5 +33,5 @@ resource_type = "AWS::DocDB::DBCluster"
 default deny = false
 
 deny {
-	object.get(input, "BackupRetentionPeriod", null) == null
+	getattr(input, "BackupRetentionPeriod", null) == null
 }

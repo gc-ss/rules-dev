@@ -14,6 +14,8 @@
 
 package rules.tf_aws_api_gateway_stage_xray_tracing_enabled
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_374e",
 	"title": "API Gateway Stage should have xray tracing enabled",
@@ -29,5 +31,5 @@ resource_type = "aws_api_gateway_stage"
 default deny = false
 
 deny {
-	object.get(input, "xray_tracing_enabled", null) != true
+	getattr(input, "xray_tracing_enabled", null) != true
 }

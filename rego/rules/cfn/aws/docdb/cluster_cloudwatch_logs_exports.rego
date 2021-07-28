@@ -14,6 +14,8 @@
 
 package rules.cfn_docdb_cluster_cloudwatch_logs_exports
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_17ef",
 	"title": "DocDB Clusters should export logs to cloudwatch",
@@ -31,5 +33,5 @@ resource_type = "AWS::DocDB::DBCluster"
 default deny = false
 
 deny {
-	count(object.get(input, "EnableCloudwatchLogsExports", [])) != 2
+	count(getattr(input, "EnableCloudwatchLogsExports", [])) != 2
 }

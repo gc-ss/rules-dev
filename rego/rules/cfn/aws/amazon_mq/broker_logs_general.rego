@@ -14,6 +14,8 @@
 
 package rules.cfn_amazon_mq_broker_logs_general
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_65f7",
 	"title": "AmazonMQ Broker should have general logging enabled",
@@ -31,5 +33,5 @@ resource_type = "AWS::AmazonMQ::Broker"
 default deny = false
 
 deny {
-	object.get(input, "Logs.General", null) != true
+	getattr(input, "Logs.General", null) != true
 }

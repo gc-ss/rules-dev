@@ -14,6 +14,8 @@
 
 package rules.tf_aws_amazon_mq_broker_publicly_accessible
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_2267",
 	"title": "AmazonMQ Broker should not be publicly exposed",
@@ -29,5 +31,5 @@ resource_type = "aws_mq_broker"
 default deny = false
 
 deny {
-	object.get(input, "publicly_accessible", null) == true
+	getattr(input, "publicly_accessible", null) == true
 }

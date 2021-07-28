@@ -14,6 +14,8 @@
 
 package rules.tf_aws_amazon_mq_broker_logs_general
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_65f7",
 	"title": "AmazonMQ Broker should have general logging enabled",
@@ -29,5 +31,5 @@ resource_type = "aws_mq_broker"
 default deny = false
 
 deny {
-	object.get(input, "logs.general", null) != true
+	getattr(input, "logs.general", null) != true
 }

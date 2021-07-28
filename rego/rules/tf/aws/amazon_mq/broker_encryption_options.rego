@@ -14,6 +14,8 @@
 
 package rules.tf_aws_amazon_mq_broker_encryption_options
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_3917",
 	"title": "AmazonMQ Broker should have encryption enabled",
@@ -29,5 +31,5 @@ resource_type = "aws_mq_broker"
 default deny = false
 
 deny {
-	object.get(input, "encryption_options.kms_key_id", null) == null
+	getattr(input, "encryption_options.kms_key_id", null) == null
 }

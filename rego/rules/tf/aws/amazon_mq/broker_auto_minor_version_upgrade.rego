@@ -14,6 +14,8 @@
 
 package rules.tf_aws_amazon_mq_broker_auto_minor_version_upgrade
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_bd76",
 	"title": "AmazonMQ Broker should have version upgrades enabled",
@@ -29,5 +31,5 @@ resource_type = "aws_mq_broker"
 default deny = false
 
 deny {
-	object.get(input, "auto_minor_version_upgrade", null) != true
+	getattr(input, "auto_minor_version_upgrade", null) != true
 }

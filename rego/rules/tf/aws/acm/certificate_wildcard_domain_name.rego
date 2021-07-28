@@ -14,6 +14,8 @@
 
 package rules.tf_aws_acm_certificate_wildcard_domain_name
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_18c1",
 	"title": "Wildcard In ACM Certificate Domain Name",
@@ -29,5 +31,5 @@ resource_type = "aws_acm_certificate"
 default deny = false
 
 deny {
-	object.get(input, "domain_name", null) == "*"
+	getattr(input, "domain_name", null) == "*"
 }

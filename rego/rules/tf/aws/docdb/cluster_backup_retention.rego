@@ -14,6 +14,8 @@
 
 package rules.tf_aws_docdb_cluster_backup_retention
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_ca25",
 	"title": "DocDB Clusters should have a backup retention period set",
@@ -29,5 +31,5 @@ resource_type = "aws_docdb_cluster"
 default deny = false
 
 deny {
-	object.get(input, "backup_retention_period", null) == null
+	getattr(input, "backup_retention_period", null) == null
 }

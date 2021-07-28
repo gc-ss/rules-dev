@@ -14,6 +14,8 @@
 
 package rules.cfn_docdb_cluster_storage_encrypted
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_0f21",
 	"title": "DocDB Clusters should use encrypted storage",
@@ -31,5 +33,5 @@ resource_type = "AWS::DocDB::DBCluster"
 default deny = false
 
 deny {
-	object.get(input, "StorageEncrypted", null) != true
+	getattr(input, "StorageEncrypted", null) != true
 }

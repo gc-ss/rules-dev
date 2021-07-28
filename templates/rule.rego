@@ -19,6 +19,7 @@ package rules.{{ input_type }}_{{ provider }}_{{ service }}_{{ name }}
 {% endif %}
 
 import data.fugue
+import data.fugue.getattr
 
 __rego__metadoc__ := {
 	"id": "{{ id }}",
@@ -42,17 +43,17 @@ is_invalid(resource) {
 {%- if not condition %}
     resource.TODO == "TODO" # FIXME
 {%- elif condition[0] == "eq" %}
-    object.get(resource, "{{ attribute }}", null) == {{ condition[1] }}
+    getattr(resource, "{{ attribute }}", null) == {{ condition[1] }}
 {%- elif condition[0] == "neq" %}
-    object.get(resource, "{{ attribute }}", null) != {{ condition[1] }}
+    getattr(resource, "{{ attribute }}", null) != {{ condition[1] }}
 {%- elif condition[0] == "is_set" %}
-    object.get(resource, "{{ attribute }}", null) != null
+    getattr(resource, "{{ attribute }}", null) != null
 {%- elif condition[0] == "is_not_set" %}
-    object.get(resource, "{{ attribute }}", null) == null
+    getattr(resource, "{{ attribute }}", null) == null
 {%- elif condition[0] == "len" and condition[1] == "neq" %}
-    count(object.get(resource, "{{ attribute }}", [])) != {{ condition[2] }}
+    count(getattr(resource, "{{ attribute }}", [])) != {{ condition[2] }}
 {%- elif condition[0] == "len" and condition[1] == "eq" %}
-    count(object.get(resource, "{{ attribute }}", [])) == {{ condition[2] }}
+    count(getattr(resource, "{{ attribute }}", [])) == {{ condition[2] }}
 {%- endif %}
 }
 

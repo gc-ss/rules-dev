@@ -18,6 +18,8 @@ package rules.{{ input_type }}_{{ service }}_{{ name }}
 package rules.{{ input_type }}_{{ provider }}_{{ service }}_{{ name }}
 {% endif %}
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "{{ id }}",
 	"title": "{{ title }}",
@@ -40,16 +42,16 @@ deny {
 {%- if not condition %}
     input.TODO == "TODO" # FIXME
 {%- elif condition[0] == "eq" %}
-    object.get(input, "{{ attribute }}", null) == {{ condition[1] }}
+    getattr(input, "{{ attribute }}", null) == {{ condition[1] }}
 {%- elif condition[0] == "neq" %}
-    object.get(input, "{{ attribute }}", null) != {{ condition[1] }}
+    getattr(input, "{{ attribute }}", null) != {{ condition[1] }}
 {%- elif condition[0] == "is_set" %}
-    object.get(input, "{{ attribute }}", null) != null
+    getattr(input, "{{ attribute }}", null) != null
 {%- elif condition[0] == "is_not_set" %}
-    object.get(input, "{{ attribute }}", null) == null
+    getattr(input, "{{ attribute }}", null) == null
 {%- elif condition[0] == "len" and condition[1] == "neq" %}
-    count(object.get(input, "{{ attribute }}", [])) != {{ condition[2] }}
+    count(getattr(input, "{{ attribute }}", [])) != {{ condition[2] }}
 {%- elif condition[0] == "len" and condition[1] == "eq" %}
-    count(object.get(input, "{{ attribute }}", [])) == {{ condition[2] }}
+    count(getattr(input, "{{ attribute }}", [])) == {{ condition[2] }}
 {%- endif %}
 }

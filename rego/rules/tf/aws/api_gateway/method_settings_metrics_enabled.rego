@@ -14,6 +14,8 @@
 
 package rules.tf_aws_api_gateway_method_settings_metrics_enabled
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_73db",
 	"title": "API Gateway Method Settings should have CloudWatch metrics enabled",
@@ -29,5 +31,5 @@ resource_type = "aws_api_gateway_method_settings"
 default deny = false
 
 deny {
-	object.get(input, "settings.metrics_enabled", null) != true
+	getattr(input, "settings.metrics_enabled", null) != true
 }

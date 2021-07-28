@@ -14,6 +14,8 @@
 
 package rules.cfn_amazon_mq_broker_logs_audit
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_65f8",
 	"title": "AmazonMQ Broker should have audit logging enabled",
@@ -31,5 +33,5 @@ resource_type = "AWS::AmazonMQ::Broker"
 default deny = false
 
 deny {
-	object.get(input, "Logs.Audit", null) != true
+	getattr(input, "Logs.Audit", null) != true
 }

@@ -14,6 +14,8 @@
 
 package rules.cfn_acm_certificate_wildcard_domain_name
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_18c1",
 	"title": "Wildcard In ACM Certificate Domain Name",
@@ -31,5 +33,5 @@ resource_type = "AWS::CertificateManager::Certificate"
 default deny = false
 
 deny {
-	object.get(input, "DomainName", null) == "*"
+	getattr(input, "DomainName", null) == "*"
 }

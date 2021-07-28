@@ -14,6 +14,8 @@
 
 package rules.tf_aws_api_gateway_stage_access_log_settings
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_aa7d",
 	"title": "API Gateway Stage should have access logging enabled",
@@ -29,5 +31,5 @@ resource_type = "aws_api_gateway_stage"
 default deny = false
 
 deny {
-	object.get(input, "access_log_settings.destination_arn", null) == null
+	getattr(input, "access_log_settings.destination_arn", null) == null
 }

@@ -14,6 +14,8 @@
 
 package rules.cfn_api_gateway_stage_access_log_settings
 
+import data.fugue.getattr
+
 __rego__metadoc__ := {
 	"id": "NEW_aa7d",
 	"title": "API Gateway Stage should have access logging enabled",
@@ -31,5 +33,5 @@ resource_type = "AWS::ApiGateway::Stage"
 default deny = false
 
 deny {
-	object.get(input, "AccessLogSetting.DestinationArn", null) == null
+	getattr(input, "AccessLogSetting.DestinationArn", null) == null
 }
